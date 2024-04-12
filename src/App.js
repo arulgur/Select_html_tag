@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import SelectComp from "./components/SelectComp";
+import { list } from "./list";
+import { useState } from "react";
 
 function App() {
+  const [cities, setCities] = useState([]);
+
+  const handleOnchange = (e) => {
+    e.preventDefault();
+    if(e.target.selectedIndex){
+      setCities(list[e.target.selectedIndex].cities);
+    }
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <SelectComp
+          contents={list}
+          callee="state"
+          handleOnchange={handleOnchange}
+        />
+        {
+          cities.length > 0 && 
+          <SelectComp 
+          contents={cities}
+          callee="cities"
+          />
+        }
     </div>
   );
 }
